@@ -4,8 +4,8 @@ class Hello{
 	
 	public void printMessage(){
 		System.out.println("First Message");
-		System.out.println("Second Message --REMOVE");
-		
+		System.out.println("Second Message");
+		System.out.println("Third Message --REMOVE");
 	}
 	
 }
