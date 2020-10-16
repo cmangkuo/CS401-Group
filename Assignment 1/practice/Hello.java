@@ -6,7 +6,7 @@ class Hello{
 		System.out.println("First Message");
 		System.out.println("Second Message");
 		System.out.println("Third Message");
-		System.out.println("Fourth Message--REMOVE");
+		System.out.println("Fourth Message");
 	}
 	
 }
