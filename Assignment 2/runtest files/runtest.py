@@ -13,7 +13,7 @@ def loadTest(jsonfilename):
 # For "build" step that must be done before running the test cases
 def build(testcase):
     if 'build' in testcase.keys():
-        compileResult = subprocess.run(testcase['build'])
+        compileResult = subprocess.run(testcase['build'],shell = True)
         assert(compileResult.returncode == 0)
 
 # Comparing expected result to actual result of running the command
@@ -66,8 +66,8 @@ def run(cmd):
             actual_err = None
             expected_err = None
         if not has_infile:
-            runResult = subprocess.run(cmd_text,text=True,stdout=actual,stderr=actual_err)
-        else: runResult = subprocess.run(cmd_text,text=True,stdin=infile,stdout=actual,stderr=actual_err)
+            runResult = subprocess.run(cmd_text,shell = True,text=True,stdout=actual,stderr=actual_err)
+        else: runResult = subprocess.run(cmd_text,shell = True,text=True,stdin=infile,stdout=actual,stderr=actual_err)
         if runResult.returncode != expected_return_code:
             print("Case " + case['name'] + " expected " + str(expected_return_code) + ", but actual returncode = " + str(runResult.returncode))
             case_pass = False
