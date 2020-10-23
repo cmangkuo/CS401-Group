@@ -1,0 +1,6 @@
+{
+    "build":"java Hello.java",    
+    "cmd":"java Hello",
+    "cases":[{"name":"hello", "expected":"expected.txt"}]
+	
+}
