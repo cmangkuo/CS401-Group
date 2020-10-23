@@ -14,7 +14,7 @@ def loadTest(jsonfilename):
 def build(testcase):
     if 'build' in testcase.keys():
         compileResult = subprocess.run(testcase['build'])
-        assert(compileResult.returncode == 1)
+        assert(compileResult.returncode == 0)
 
 # Comparing expected result to actual result of running the command
 def check(expected, actual):
