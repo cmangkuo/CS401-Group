@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 File: testHello.json
 Case hello passes
 (1, 0)
+=======
+Case hello expected 0, but actual returncode = 1
+Case hello fails because actual output did not match expected output
+(0, 1)
+>>>>>>> f623dd59a2cd29be12417b58b5027b867388ec23
