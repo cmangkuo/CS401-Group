@@ -1,0 +1,2 @@
+Enter a temperature in Centigrade to convert to Fahrenheit: Equivalent Fahrenheit temperature = 68.0
+Nonsense value: This causes the original script to fail this case

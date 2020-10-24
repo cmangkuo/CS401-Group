@@ -1,0 +1,3 @@
+File: testHello.json
+Case hello passes
+(1, 0)

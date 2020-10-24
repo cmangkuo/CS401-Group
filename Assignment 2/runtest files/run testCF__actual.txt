@@ -1,0 +1,4 @@
+File: testCF.json
+Case -40C passes
+Case 100C passes
+(2, 0)
