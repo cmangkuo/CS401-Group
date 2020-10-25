@@ -2,6 +2,7 @@ import json
 import subprocess
 import sys
 import os
+import argparse
 
 # Crude version of testing tool for command-line programs
 
@@ -17,22 +18,54 @@ def build(testcase):
         assert(compileResult.returncode == 0)
 
 # Comparing expected result to actual result of running the command
-def check(expected, actual):
+def check(expected, actual, ignoreLine):
     if expected == None:
         return actual == None
     success = True
     for line1 in expected:
-      if line1 != actual.readline():
-        success = False
-        break
-    line = actual.readline()
-    if line: # True if not at eof
-        print('actual still has: ' + line)
-        success = False
-    return success
+    
+      #print("ignoreLine: " , bool(ignoreLine))
+      #print("has X: ",line1.startswith("Hel"))
+      
+      
+     #must check actual not line1 with startswith
+       
+    
+    
+      if bool(ignoreLine):
+      
+        tempLine = actual.readline()
+        
+        while tempLine.startswith("X"):
+          tempLine = actual.readline()
+        
+        if line1 != tempLine:
+          success = False
+          break   
+        
+        tempLine = actual.readline()
+        while tempLine.startswith("X"):
+          tempLine = actual.readline()
+        
+        line = tempLine
+        if line and not tempLine.startswith("X"): # True if not at eof
+          print('actual still has: ' + line)
+          success = False
+        return success  
+      else:
+        if line1 != actual.readline():
+          success = False
+          break
+        
+        line = actual.readline()
+        if line: # True if not at eof
+          print('actual still has: ' + line)
+          success = False
+        return success
+        
 
 # Running the test cases
-def run(cmd):
+def run(cmd,ignoreLine):
     failures = 0
     successes = 0
     for case in cmd['cases']:
@@ -95,8 +128,10 @@ def run(cmd):
             case_pass = False
         if has_expected: actual = open(outname)
         if has_err: actual_err = open(errname)
+        
 
-        if (Match == 1) and check(expected_err, actual_err):
+        #if (Match == 1) and check(expected_err, actual_err,ignoreLine):
+        if check(expected,actual,ignoreLine) and check(expected_err, actual_err,ignoreLine):
             print("Case " + case['name'] + " passes")
         else:
             print("Case " + case['name'] + " fails because actual output did not match expected output")
@@ -117,14 +152,26 @@ def run(cmd):
 usage = "python runtest.py testfile"
 
 if __name__ == "__main__":
+	
+	skipLine = 0
+	parser = argparse.ArgumentParser()
+	parser.add_argument("-i", "--ignore", action ="store_true", help = "ignore lines begining with #")
+	parser.add_argument('filename',action = 'store', type = str, help = "json file")
+	
+	args = parser.parse_args()
+	
 	if len(sys.argv) < 2:
 		print(usage)
 		exit(1)
 	THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-	my_file = os.path.join(THIS_FOLDER, str(sys.argv[1]))
-	print("File: " + str(sys.argv[1]))
+	my_file = os.path.join(THIS_FOLDER, str(args.filename))
+	print("File: " + str(args.filename))
+	
+	if args.ignore:
+	  skipLine = 1
+	
 	testcase = loadTest(my_file)
 	build(testcase)
-	print(run(testcase))
+	print(run(testcase,skipLine))
 
 

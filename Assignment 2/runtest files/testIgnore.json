@@ -1,0 +1,6 @@
+{
+    "build":"javac Ignore.java",    
+    "cmd":"java Ignore",
+    "cases":[{"name":"ignore", "expected":"ignoreexpected.txt"}]
+	
+}
