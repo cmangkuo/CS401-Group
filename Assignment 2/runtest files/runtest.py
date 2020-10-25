@@ -24,19 +24,11 @@ def check(expected, actual, ignoreLine):
     success = True
     for line1 in expected:
     
-      #print("ignoreLine: " , bool(ignoreLine))
-      #print("has X: ",line1.startswith("Hel"))
-      
-      
-     #must check actual not line1 with startswith
-       
-    
-    
-      if bool(ignoreLine):
+      if bool(ignoreLine): #if flag tripped, will ignore lines that start with a specific character, X
       
         tempLine = actual.readline()
         
-        while tempLine.startswith("X"):
+        while tempLine.startswith("X"):#skip past lines
           tempLine = actual.readline()
         
         if line1 != tempLine:
@@ -44,7 +36,7 @@ def check(expected, actual, ignoreLine):
           break   
         
         tempLine = actual.readline()
-        while tempLine.startswith("X"):
+        while tempLine.startswith("X"):# skip past lines
           tempLine = actual.readline()
         
         line = tempLine
@@ -52,7 +44,7 @@ def check(expected, actual, ignoreLine):
           print('actual still has: ' + line)
           success = False
         return success  
-      else:
+      else:#if not tripped, will compare every line, no skipping
         if line1 != actual.readline():
           success = False
           break
@@ -104,10 +96,6 @@ def run(cmd,ignoreLine):
                 for aLine in actualLines:
                     if (eLine == aLine):
                         Match = 1
-                        
-   
-                
-                
                 
      
         else:
@@ -130,6 +118,7 @@ def run(cmd,ignoreLine):
         if has_err: actual_err = open(errname)
         
 
+        #TODO: add command line arguemnt to supprot checking only one line
         #if (Match == 1) and check(expected_err, actual_err,ignoreLine):
         if check(expected,actual,ignoreLine) and check(expected_err, actual_err,ignoreLine):
             print("Case " + case['name'] + " passes")
@@ -154,9 +143,11 @@ usage = "python runtest.py testfile"
 if __name__ == "__main__":
 	
 	skipLine = 0
-	parser = argparse.ArgumentParser()
+	parser = argparse.ArgumentParser() #implimented argparse to support commandline arguments
 	parser.add_argument("-i", "--ignore", action ="store_true", help = "ignore lines begining with #")
 	parser.add_argument('filename',action = 'store', type = str, help = "json file")
+	#current arguments, filename for json file
+	#-i or --ignore, ignores output that starts with certian character, in this case it is "X"
 	
 	args = parser.parse_args()
 	
@@ -167,7 +158,7 @@ if __name__ == "__main__":
 	my_file = os.path.join(THIS_FOLDER, str(args.filename))
 	print("File: " + str(args.filename))
 	
-	if args.ignore:
+	if args.ignore:# if -i or --ignore argument, toggles flag to skip certian lines
 	  skipLine = 1
 	
 	testcase = loadTest(my_file)
