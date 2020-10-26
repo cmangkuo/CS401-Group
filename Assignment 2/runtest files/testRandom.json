@@ -1,0 +1,6 @@
+{
+    "build":"javac Randomizer.java",
+    "cmd":"java Randomizer",
+    "cases":[{"name":"random", "expected":"randomexpected.txt"}]
+}
+

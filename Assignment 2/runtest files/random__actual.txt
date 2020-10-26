@@ -1,0 +1,3 @@
+0.4646284647358693 tries
+this was done 0.32981680957247383 tries
+The number of times this was tried is 0.677786244318155
