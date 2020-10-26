@@ -78,7 +78,7 @@ def checkDesiredOnly(expected, actual):
 
 
 # Running the test cases
-def run(cmd,ignoreLine):
+def run(cmd,ignoreLine, readOneLine):
     failures = 0
     successes = 0
     for case in cmd['cases']:
@@ -139,13 +139,20 @@ def run(cmd,ignoreLine):
         if has_expected: actual = open(outname)
         if has_err: actual_err = open(errname)
 
-        #TODO: add command line arguemnt to supprot checking only one line
-        #if (Match == 1) and check(expected_err, actual_err,ignoreLine):
-        if check(expected,actual,ignoreLine) and check(expected_err, actual_err,ignoreLine):
-            print("Case " + case['name'] + " passes")
+        #If -l or --line command used, only test to match one line, else test as normal 
+        if readOneLine:
+          if (Match==1) and check(expected_err, actual_err,ignoreLine):
+              print("Case " + case['name'] + " passes")
+          else:
+              print("Case " + case['name'] + " fails because actual output did not match expected output")
+              case_pass = False
         else:
-            print("Case " + case['name'] + " fails because actual output did not match expected output")
-            case_pass = False
+          if check(expected,actual,ignoreLine) and check(expected_err, actual_err,ignoreLine):
+              print("Case " + case['name'] + " passes")
+          else:
+              print("Case " + case['name'] + " fails because actual output did not match expected output")
+              case_pass = False
+        
 
         # New code: if has_desired_only is true
         if has_desired_only:
@@ -168,11 +175,15 @@ usage = "python runtest.py testfile"
 if __name__ == "__main__":
 	
 	skipLine = 0
+	oneLine = 0
 	parser = argparse.ArgumentParser() #implimented argparse to support commandline arguments
 	parser.add_argument("-i", "--ignore", action ="store_true", help = "ignore lines begining with #")
+	parser.add_argument("-l", "--line", action ="store_true", help = "only match one line")
 	parser.add_argument('filename',action = 'store', type = str, help = "json file")
 	#current arguments, filename for json file
 	#-i or --ignore, ignores output that starts with certian character, in this case it is "X"
+	#-l or --line, test output to see if one line matches, test passes if it does
+	#can test both with testIgnore.json
 	
 	args = parser.parse_args()
 	
@@ -185,9 +196,12 @@ if __name__ == "__main__":
 	
 	if args.ignore:# if -i or --ignore argument, toggles flag to skip certian lines
 	  skipLine = 1
+	  
+	if args.line:
+	  oneLine = 1
 	
 	testcase = loadTest(my_file)
 	build(testcase)
-	print(run(testcase,skipLine))
+	print(run(testcase,skipLine,oneLine))
 
 
