@@ -31,6 +31,27 @@ def check(expected, actual):
         success = False
     return success
 
+# Compares expected output to actual output. 
+# Returns true as long as the lines from desired output can be found in the actual output in the correct order. 
+def checkDesiredOnly(expected, actual):
+    if expected == None:
+        return actual == None
+    success = True
+    for line1 in expected:
+        line2 = actual.readline()
+        while line2:
+            if line1 == line2:
+                break
+            line2 = actual.readline()
+        if not line2 and line1: # actual reached eof but expected still has lines
+            print('actual does not have: ' + line1)
+            success = False
+    return success
+
+
+            
+
+
 # Running the test cases
 def run(cmd):
     failures = 0
@@ -38,11 +59,12 @@ def run(cmd):
     for case in cmd['cases']:
         case_pass = True
         case_keys = case.keys()
-        # print(case.keys())
+        #print(case.keys())
         has_infile = 'in' in case_keys
         has_args = 'args' in case_keys
         has_expected = 'expected' in case_keys
         has_err = 'expected_err' in case_keys
+        has_desired_only = 'desired_only' in case_keys #if this is true then use checkDesiredOnly()
         if 'expected_return_code' in case_keys:
             expected_return_code = case['expected_return_code']
         else: expected_return_code = 0
@@ -61,11 +83,11 @@ def run(cmd):
             
             # Checks expected and actual text files to see if expected text exists in the actual file
             # Original code only passes if the actual file and expected file are identical
-            # New code only checks if at least 1 line in the expected text file exists in the actual text file
+            # New code only checks if at least 1 line in the expected text file exists in the actual text filei
             expectedFile = open(case['expected'], 'r')
             expectedLines = expectedFile.readlines()
             
-            actualFile = open(case['expected'], 'r')
+            actualFile = open(case['expected'], 'r')  # Is this opening the expected file twice? I thought actual file should only have output after subprocess.run() is called below
             actualLines = actualFile.readlines()
             for eLine in expectedLines:
                 for aLine in actualLines:
@@ -95,13 +117,18 @@ def run(cmd):
             case_pass = False
         if has_expected: actual = open(outname)
         if has_err: actual_err = open(errname)
-
+        
+    
         if (Match == 1) and check(expected_err, actual_err):
             print("Case " + case['name'] + " passes")
         else:
             print("Case " + case['name'] + " fails because actual output did not match expected output")
             case_pass = False
 
+        # New code: if has_desired_only is true
+        if has_desired_only:
+            case_pass = checkDesiredOnly(expected, actual)
+        # end new code
         if case_pass:
             successes += 1
         else: failures += 1

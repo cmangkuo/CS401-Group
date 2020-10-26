@@ -1,0 +1,8 @@
+{
+    "build":"javac C2F.java",
+    "cmd":"java C2F",
+    "cases":[
+        {"name":"desiredOnly", "in":"desiredOnlyIn.txt", "expected":"100desiredOnlyExpect.txt", "desired_only":"True"}
+    ]
+}
+
