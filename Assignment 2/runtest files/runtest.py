@@ -45,15 +45,27 @@ def check(expected, actual, ignoreLine):
           success = False
         return success  
       else:#if not tripped, will compare every line, no skipping
-        if line1 != actual.readline():
-          success = False
-          break
-        
-        line = actual.readline()
-        if line: # True if not at eof
-          print('actual still has: ' + line)
-          success = False
-        return success
+         lastpo = actual.tell()
+         tLine = line1
+         if line1 != actual.readline():
+            success = False
+         actual.seek(lastpo)
+
+         #tests for random number generator
+         tempLine = ""
+         thisLine = re.findall(r'\w+', actual.readline())
+         first = True
+         for words in thisLine:
+            if first:
+               if not words.isdecimal() and not words.isnumeric() and not words.isdigit():
+                  tempLine = (tempLine + words)
+                  first = False
+            else:
+               if not words.isdecimal() and not words.isnumeric() and not words.isdigit():
+                  tempLine = (tempLine + " " + words)
+         if (tLine.strip("\n") == tempLine):
+            success = True
+         return success
         
 
 # Compares expected output to actual output. 
