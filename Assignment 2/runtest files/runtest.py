@@ -2,6 +2,7 @@ import json
 import subprocess
 import sys
 import os
+import argparse
 
 # Crude version of testing tool for command-line programs
 
@@ -17,19 +18,43 @@ def build(testcase):
         assert(compileResult.returncode == 0)
 
 # Comparing expected result to actual result of running the command
-def check(expected, actual):
+def check(expected, actual, ignoreLine):
     if expected == None:
         return actual == None
     success = True
     for line1 in expected:
-      if line1 != actual.readline():
-        success = False
-        break
-    line = actual.readline()
-    if line: # True if not at eof
-        print('actual still has: ' + line)
-        success = False
-    return success
+    
+      if bool(ignoreLine): #if flag tripped, will ignore lines that start with a specific character, X
+      
+        tempLine = actual.readline()
+        
+        while tempLine.startswith("X"):#skip past lines
+          tempLine = actual.readline()
+        
+        if line1 != tempLine:
+          success = False
+          break   
+        
+        tempLine = actual.readline()
+        while tempLine.startswith("X"):# skip past lines
+          tempLine = actual.readline()
+        
+        line = tempLine
+        if line and not tempLine.startswith("X"): # True if not at eof
+          print('actual still has: ' + line)
+          success = False
+        return success  
+      else:#if not tripped, will compare every line, no skipping
+        if line1 != actual.readline():
+          success = False
+          break
+        
+        line = actual.readline()
+        if line: # True if not at eof
+          print('actual still has: ' + line)
+          success = False
+        return success
+        
 
 # Compares expected output to actual output. 
 # Returns true as long as the lines from desired output can be found in the actual output in the correct order. 
@@ -53,7 +78,7 @@ def checkDesiredOnly(expected, actual):
 
 
 # Running the test cases
-def run(cmd):
+def run(cmd,ignoreLine):
     failures = 0
     successes = 0
     for case in cmd['cases']:
@@ -93,10 +118,6 @@ def run(cmd):
                 for aLine in actualLines:
                     if (eLine == aLine):
                         Match = 1
-                        
-   
-                
-                
                 
      
         else:
@@ -117,9 +138,10 @@ def run(cmd):
             case_pass = False
         if has_expected: actual = open(outname)
         if has_err: actual_err = open(errname)
-        
-    
-        if (Match == 1) and check(expected_err, actual_err):
+
+        #TODO: add command line arguemnt to supprot checking only one line
+        #if (Match == 1) and check(expected_err, actual_err,ignoreLine):
+        if check(expected,actual,ignoreLine) and check(expected_err, actual_err,ignoreLine):
             print("Case " + case['name'] + " passes")
         else:
             print("Case " + case['name'] + " fails because actual output did not match expected output")
@@ -144,14 +166,28 @@ def run(cmd):
 usage = "python runtest.py testfile"
 
 if __name__ == "__main__":
+	
+	skipLine = 0
+	parser = argparse.ArgumentParser() #implimented argparse to support commandline arguments
+	parser.add_argument("-i", "--ignore", action ="store_true", help = "ignore lines begining with #")
+	parser.add_argument('filename',action = 'store', type = str, help = "json file")
+	#current arguments, filename for json file
+	#-i or --ignore, ignores output that starts with certian character, in this case it is "X"
+	
+	args = parser.parse_args()
+	
 	if len(sys.argv) < 2:
 		print(usage)
 		exit(1)
 	THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-	my_file = os.path.join(THIS_FOLDER, str(sys.argv[1]))
-	print("File: " + str(sys.argv[1]))
+	my_file = os.path.join(THIS_FOLDER, str(args.filename))
+	print("File: " + str(args.filename))
+	
+	if args.ignore:# if -i or --ignore argument, toggles flag to skip certian lines
+	  skipLine = 1
+	
 	testcase = loadTest(my_file)
 	build(testcase)
-	print(run(testcase))
+	print(run(testcase,skipLine))
 
 
