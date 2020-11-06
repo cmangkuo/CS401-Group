@@ -1,14 +1,16 @@
+import java.util.ArrayList;
+
 /*Each player has a player board, player number, play area and research tokens.
 there are more things inside each player board
 each player start with 4 basic cards which is different from item/fear/artifact
 each player also get 2 fear cards*/
-public class Player {
+public class PlayerModel {
   private int id; //player number
-	private ArrayList<Card> playArea //like a graveyard for used cards and is sent to bottom of deck after round ends
+	private ArrayList<CardModel> playArea; //like a graveyard for used cards and is sent to bottom of deck after round ends
 	private PlayerBoardModel playerBoard; //player board
 	private int researchTokens; //number of research tokens
 
-	methods:
+	//methods:
 	//every player draws at the beginning of their turn to have 5 cards always
 	public void Draw(){}
 

@@ -1,7 +1,9 @@
-public class MainBoard {
+import java.util.ArrayList;
+
+public class MainBoardModel {
 	private CardRowModel cardRow;
 	private IslandModel island;
 	private ResearchTrackModel researchTrack;
 	private SupplyBoardModel supplyboard;
-	private ArrayList<Player> players;
+	private ArrayList<PlayerModel> players;
 }
