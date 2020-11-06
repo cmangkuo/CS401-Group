@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class CardModel {
 	String travelValue;		//the type of travel: foot, plane, car, or boat
@@ -5,6 +6,8 @@ public class CardModel {
 	String effect;		  
 	boolean isFreeAction; // true means it doesn't count as your main action, false means it does count as your main action
 	int points;
+	ArrayList<String> effects;
+	boolean isActionFree;
 	
 	public CardModel() {}
 	
