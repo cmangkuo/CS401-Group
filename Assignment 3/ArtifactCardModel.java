@@ -1,3 +1,4 @@
+
 public class ArtifactCardModel extends CardModel{
 		int costToBuy;
 		int costToPlay;
