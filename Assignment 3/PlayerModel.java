@@ -38,8 +38,13 @@ public class PlayerModel {
 	
 	//MAIN ACTIONS: Dig at a site, discover a new site, overcome a guardian, buy a card, play a card, research , and pass
 	
-	public void dig() {
-		mainActionDone = true;
+	public void dig(CardModel card, SiteModel site) {
+		//can only dig if site has room and the travel value = site travel cost and if we have freed up archaeologists
+		if (site.hasRoom() && card.getTravelValue() == site.getTravelCost() && playerBoard.hasFreeArchaelogists()){
+			playerBoard.gainResource(site.getResourceName(), site.getResourceAmount());
+			playerBoard.setArchaelogist(site);
+			MainActionDone = true;
+		}
 	}
 	public void discover() {
 		mainActionDone = true;
