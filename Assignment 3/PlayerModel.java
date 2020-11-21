@@ -42,6 +42,7 @@ public class PlayerModel {
 		//can only dig if site has room and the travel value = site travel cost and if we have freed up archaeologists
 		if (site.hasRoom() && card.getTravelValue() == site.getTravelCost() && playerBoard.hasFreeArchaelogists()){
 			playerBoard.gainResource(site.getResourceName(), site.getResourceAmount());
+			site.archaeologistDigging();
 			playerBoard.setArchaelogist(site);
 			MainActionDone = true;
 		}
