@@ -14,6 +14,7 @@ public class ArchaeologistModel {
 	
 	public void setSite(SiteModel model) {
 		site = model;
+		free = false;
 	}
 	
 	public boolean getFree() {
