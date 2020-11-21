@@ -7,13 +7,15 @@ public class PlayerBoardModel {
 	final static int MAX_IDOLS = 4;
 	final static int MAX_ARCHS = 2;
 	final static int MAX_HAND = 5;
+	int Archaeologist
 	ArrayList<CardModel> deck;
 	ArrayList<CardModel> hand;
 	ArrayList<CardModel> playArea;
 	ArrayList<AssistantModel> assistants; 
 	ArrayList<IdolModel> idolSlots;
 	HashMap<String, Integer> resources;
-	ArchaeologistModel[] archs = new ArchaeologistModel[MAX_ARCHS];
+	ArchaeologistModel arch1;
+	ArchaeologistModel arch2;
 	
 	public PlayerBoardModel() {
 		ExplorationCardModel explore1 = new ExplorationCardModel("car", 1);
@@ -118,7 +120,22 @@ public class PlayerBoardModel {
 		return assistants.size();
 	}
 
-
+	public boolean hasFreeArchaelogists() {
+		if (archs.size() < MAX_ARCHS) 
+			return true;
+		return false;
+	}
+	
+	public void setArchaelogist(site) {
+		if (arch1.isFree()) {
+			arch1.isAtSite(site);
+			arch1.setFree(false);
+		}
+		elseif (arch2.isFree()) {
+			arch2.isAtSite(site);
+			arch2.setFree(false);
+		}	
+	}
 }
 
 
