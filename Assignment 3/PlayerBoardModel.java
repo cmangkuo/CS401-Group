@@ -127,13 +127,11 @@ public class PlayerBoardModel {
 	}
 	
 	public void setArchaelogist(site) {
-		if (arch1.isFree()) {
-			arch1.isAtSite(site);
-			arch1.setFree(false);
+		if (arch1.getFree() == true) {
+			arch1.setSite(site);
 		}
-		elseif (arch2.isFree()) {
-			arch2.isAtSite(site);
-			arch2.setFree(false);
+		elseif (arch2.getFree() == true) {
+			arch2.setSite(site);
 		}	
 	}
 }
