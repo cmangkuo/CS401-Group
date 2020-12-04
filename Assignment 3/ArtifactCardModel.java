@@ -3,7 +3,7 @@ public class ArtifactCardModel extends CardModel{
 		int costToBuy;
 		int costToPlay;
 		boolean isBought = false;
-	public ArtifactCardModel (String travelValue, String effect, int costToBuy, int costToPlay, int travelPoints) {
+	public ArtifactCardModel (String travelValue, String effect, int costToBuy, int points, int costToPlay, int travelPoints) {
 		this.isFreeAction = false;	
 		this.travelValue = travelValue;
 		this.effect = effect;
