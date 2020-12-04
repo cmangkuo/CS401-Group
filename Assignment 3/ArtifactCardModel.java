@@ -7,6 +7,7 @@ public class ArtifactCardModel extends CardModel{
 		this.isFreeAction = false;	
 		this.travelValue = travelValue;
 		this.effect = effect;
+		this.points = points;
 		this.costToBuy = costToBuy;
 		this.costToPlay = costToPlay;
 		this.travelPoints = travelPoints;
