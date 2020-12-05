@@ -114,19 +114,19 @@ public class MainBoardModel {
 		//public SiteModel(String resource, int resAmt, int t)
 		for (int i = 0; i < 22; i++) {
 			if(i % 5 = 0) {
-				resource = "arrowhead";
+				resource = "arrowheads";
 			}
 			if(i % 5 = 1) {
-				resource = "tablet";
+				resource = "tablets";
 			}
 			if(i % 5 = 2) {
-				resource = "funding";
+				resource = "funding coins";
 			}
 			if(i % 5 = 3) {
-				resource = "exploration";
+				resource = "exploration coins";
 			}
 			if(i % 5 = 4) {
-				resource = "jewel";
+				resource = "jewels";
 			}
 			if(i < 6) {
 				SiteModel site = new SiteModel(resource, (i%2+1), 0);
