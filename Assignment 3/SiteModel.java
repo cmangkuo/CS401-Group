@@ -5,13 +5,15 @@ public class SiteModel {
         private String resourceName;
         private int resourceAmount;
         private int travelCost;
+        private int tile; //0 = free, 1 = line tile (pay 3 exploration coins), 2 = double line tile (pay 6 exploration coins)
         
-        public SiteModel(String resource, int resAmt){
+        public SiteModel(String resource, int resAmt, int t){
                 max = (Math.random() <= 0.5) ? 1 : 2;
                 travelCost = (Math.random()*8)+1; //travel cost, 1 = foot,  2 = car, 3 = boat, 4 = plane, 5-8 is double of each ex: 5 is 2 foot icons.
                 resourceName = resource;
                 resourceAmount = resAmt;
                 space = 0;
+                tiles = t;
         }
         
         public String getResourceName(){
