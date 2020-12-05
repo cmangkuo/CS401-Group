@@ -14,10 +14,6 @@ public class SiteModel {
                 tiles = t;
         }
         
-        public String getResourceName(){
-                return resourceName;
-        }
-        
         public int getResourceAmount(){
                 return resourceAmount;
         }
