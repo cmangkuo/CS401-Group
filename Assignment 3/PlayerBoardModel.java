@@ -30,6 +30,11 @@ public class PlayerBoardModel {
 		deck.add(fund2);
 		deck.add(fear1);
 		deck.add(fear2);
+		resources.put("arrowheads", 0);
+		resources.put("exploration coins", 0);
+		resources.put("funding coins", 0);
+		resources.put("jewels", 0);
+		resources.put("tablets", 0);
 		shuffleDeck();
 		draw();
 	}
@@ -126,7 +131,7 @@ public class PlayerBoardModel {
 		return false;
 	}
 	
-	public void setArchaelogist(site) {
+	public void setArchaelogist(SiteModel site) {
 		if (arch1.getFree() == true) {
 			arch1.setSite(site);
 		}
