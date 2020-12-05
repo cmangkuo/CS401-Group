@@ -7,6 +7,7 @@ public class MainBoardModel {
 	private LinkedList<CardModel> exilePile;
 	private int moonStaff;
 	private ArrayList<CardModel> cardRow;
+	private ArrayList<SiteModel> sites;
 	private ResearchTrackModel researchTrack;
 	private SupplyBoardModel supplyboard;
 	private ArrayList<PlayerModel> players;
@@ -107,6 +108,40 @@ public class MainBoardModel {
 		}
 		Collections.shuffle(items);
 		Collections.shuffle(artifacts);
+		
+		//for initializing all the sites, there are 5 free, 10 level 1, 6 level 2.
+		String resource;
+		//public SiteModel(String resource, int resAmt, int t)
+		for (int i = 0; i < 22; i++) {
+			if(i % 5 = 0) {
+				resource = "arrowhead";
+			}
+			if(i % 5 = 1) {
+				resource = "tablet";
+			}
+			if(i % 5 = 2) {
+				resource = "funding";
+			}
+			if(i % 5 = 3) {
+				resource = "exploration";
+			}
+			if(i % 5 = 4) {
+				resource = "jewel";
+			}
+			if(i < 6) {
+				SiteModel site = new SiteModel(resource, (i%2+1), 0);
+				sites.add(site);
+			}
+			else if (i > 6 && i < 16) {
+				SiteModel site = new SiteModel(resource, (i%2+1), 1);
+				sites.add(site);
+			}
+			else {
+				SiteModel site = new SiteModel(resource, (i%2+1), 2);
+				sites.add(site);
+			}
+		}
+		Collections.shuffle(site);
 	}
 	
 	public void roundEnd() {
