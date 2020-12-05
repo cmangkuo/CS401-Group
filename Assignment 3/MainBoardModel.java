@@ -52,17 +52,17 @@ public class MainBoardModel {
 			
 			//to randomize item effect, making these up
 			if (i%10==0)
-				effect = "Gain 1 extra funding card";
+				effect = "Gain 1 extra funding coin";
 			if (i%10==1)
-				effect = "Gain 2 extra funding cards";
+				effect = "Gain 2 extra funding coins";
 			if (i%10==2)
-				effect = "Gain 3 extra funding cards";
+				effect = "Gain 3 extra funding coins";
 			if (i%10==3)
-				effect = "Gain 1 extra exploration card";
+				effect = "Gain 1 extra exploration coin";
 			if (i%10==4)
-				effect = "Gain 2 extra exploration cards";
+				effect = "Gain 2 extra exploration coins";
 			if (i%10==5)
-				effect = "Gain 3 extra exploration cards";
+				effect = "Gain 3 extra exploration coins";
 			if (i%10==6)
 				effect = "Draw an artifact card";
 			if (i%10==7)
@@ -95,9 +95,9 @@ public class MainBoardModel {
 			if (i%7==2)
 				effect = "Use two main actions";
 			if (i%7==3)
-				effect = "Gain 5 funding cards";
+				effect = "Gain 5 funding coins";
 			if (i%7==4)
-				effect = "Gain 5 exploration cards";
+				effect = "Gain 5 exploration coins";
 			if (i%7==5)
 				effect = "Draw 3 item cards, choose 1 and put the other 2 back";
 			if (i%7==6)
