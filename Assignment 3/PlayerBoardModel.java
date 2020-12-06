@@ -7,7 +7,7 @@ public class PlayerBoardModel {
 	final static int MAX_IDOLS = 4;
 	final static int MAX_ARCHS = 2;
 	final static int MAX_HAND = 5;
-	int Archaeologist
+	int Archaeologist;
 	ArrayList<CardModel> deck;
 	ArrayList<CardModel> hand;
 	ArrayList<CardModel> playArea;
@@ -135,7 +135,7 @@ public class PlayerBoardModel {
 		if (arch1.getFree() == true) {
 			arch1.setSite(site);
 		}
-		elseif (arch2.getFree() == true) {
+		else if (arch2.getFree() == true) {
 			arch2.setSite(site);
 		}	
 	}
