@@ -126,16 +126,14 @@ public class PlayerBoardModel {
 	}
 
 	public boolean hasFreeArchaelogists() {
-		if (archs.size() < MAX_ARCHS) 
-			return true;
-		return false;
+		return archs.size() < MAX_ARCHS;
 	}
 	
 	public void setArchaelogist(SiteModel site) {
-		if (arch1.getFree() == true) {
+		if (arch1.getFree()) {
 			arch1.setSite(site);
 		}
-		else if (arch2.getFree() == true) {
+		else if (arch2.getFree()) {
 			arch2.setSite(site);
 		}	
 	}
